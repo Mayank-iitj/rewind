@@ -1,0 +1,18 @@
+# Netlify configuration for hosting the static frontend in ./frontend
+# You must replace https://YOUR-BACKEND-URL with your deployed API base (Gunicorn/Docker on Render, Railway, Fly.io, AWS, etc.)
+
+[build]
+  publish = "frontend"
+
+# Proxy API requests from the static site to your backend
+[[redirects]]
+  from = "/api/*"
+  to = "https://YOUR-BACKEND-URL/api/:splat"
+  status = 200
+  force = true
+
+# Optional: custom headers
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=600"
